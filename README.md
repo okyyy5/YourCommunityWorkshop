@@ -16,7 +16,9 @@ The external package Dapper was utilized to manage the SQL queries and the sendi
 
 ### How to Use and Install
 
-There is no executable, therefore it must be imported into a relevant environment that can run C# code. Alongside this an application that can manage an SQL Database must be utilized.
+The executable is located in YourCommunityWorkshopProject\YourCommunityWorkshop\bin\Release
+
+However, this application was developed as a way to explore different aspects of development in C# and SQL, as such running the source code directly in a relevant environment is recommended. Either way an application that can manage an SQL Database must be utilized.
 
 The application itself is self-explanatory. Navigate the menus, add, and delete entries to Customers, Tools, and Rentals when needed. Search functions are inserted to ease the task 
 of locating specific entries. A Settings menu is provided to change the colour of the application.
