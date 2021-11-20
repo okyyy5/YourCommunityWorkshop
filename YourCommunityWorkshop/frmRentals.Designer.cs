@@ -67,6 +67,9 @@ namespace YourCommunityWorkshop
             this.txtRentalID = new System.Windows.Forms.TextBox();
             this.rb_All = new System.Windows.Forms.RadioButton();
             this.btnToolsReport = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnCustomerHistory = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTools)).BeginInit();
@@ -85,7 +88,6 @@ namespace YourCommunityWorkshop
             // 
             // dgvRentals
             // 
-            this.dgvRentals.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRentals.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRentals.Location = new System.Drawing.Point(12, 12);
             this.dgvRentals.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -194,7 +196,7 @@ namespace YourCommunityWorkshop
             // 
             // btnRentalReport
             // 
-            this.btnRentalReport.Location = new System.Drawing.Point(800, 656);
+            this.btnRentalReport.Location = new System.Drawing.Point(800, 681);
             this.btnRentalReport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRentalReport.Name = "btnRentalReport";
             this.btnRentalReport.Size = new System.Drawing.Size(241, 32);
@@ -469,7 +471,7 @@ namespace YourCommunityWorkshop
             // 
             // btnToolsReport
             // 
-            this.btnToolsReport.Location = new System.Drawing.Point(800, 709);
+            this.btnToolsReport.Location = new System.Drawing.Point(800, 731);
             this.btnToolsReport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnToolsReport.Name = "btnToolsReport";
             this.btnToolsReport.Size = new System.Drawing.Size(241, 32);
@@ -478,11 +480,45 @@ namespace YourCommunityWorkshop
             this.btnToolsReport.UseVisualStyleBackColor = true;
             this.btnToolsReport.Click += new System.EventHandler(this.btnToolsReport_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1176, 100);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(8, 8);
+            this.button1.TabIndex = 63;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // btnCustomerHistory
+            // 
+            this.btnCustomerHistory.Location = new System.Drawing.Point(801, 629);
+            this.btnCustomerHistory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCustomerHistory.Name = "btnCustomerHistory";
+            this.btnCustomerHistory.Size = new System.Drawing.Size(162, 34);
+            this.btnCustomerHistory.TabIndex = 64;
+            this.btnCustomerHistory.Text = "View Customer History";
+            this.btnCustomerHistory.UseVisualStyleBackColor = true;
+            this.btnCustomerHistory.Click += new System.EventHandler(this.btnCustomerHistory_Click);
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(969, 629);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(72, 34);
+            this.btnReset.TabIndex = 65;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // frmRentals
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1756, 775);
+            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.btnCustomerHistory);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnToolsReport);
             this.Controls.Add(this.rb_All);
             this.Controls.Add(this.txtRentalID);
@@ -574,5 +610,8 @@ namespace YourCommunityWorkshop
         private System.Windows.Forms.TextBox txtRentalID;
         private System.Windows.Forms.RadioButton rb_All;
         private System.Windows.Forms.Button btnToolsReport;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCustomerHistory;
+        private System.Windows.Forms.Button btnReset;
     }
 }

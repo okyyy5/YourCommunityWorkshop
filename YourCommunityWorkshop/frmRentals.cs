@@ -20,7 +20,7 @@ namespace YourCommunityWorkshop
         Tool tool = new Tool();
         Rental rental = new Rental();
         Rental returned = new Rental();
-        List<Rental> rentalList = new List<Rental>(); 
+        List<RentalView> rentalList = new List<RentalView>(); 
 
         List<Tool> toolList = new List<Tool>(); // Initial Lists without filters
         List<Tool> modtoolList = new List<Tool>(); // List to filter into
@@ -76,6 +76,23 @@ namespace YourCommunityWorkshop
             this.Close();
         }
 
+        // Updates Rental Table on Button Click in accordance to method
+        private void btnCustomerHistory_Click(object sender, EventArgs e)
+        {
+            if (IsCustomerSelected())
+            {
+                int id = Int32.Parse(txtCustomerID.Text);
+                rentalList = adapter.GetAllRentals(id);
+                dgvRentals.DataSource = null;
+                dgvRentals.DataSource = rentalList;
+            }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            SetupDataTable();
+        }
+
         // Executes rent function on button click
         private void btnRent_Click(object sender, EventArgs e)
         {
@@ -83,31 +100,33 @@ namespace YourCommunityWorkshop
             {
                 if (IsToolOnRent())
                 {
-                    DialogResult result = MessageBox.Show("Are you sure you want to rent this tool?", "Confirmation", MessageBoxButtons.YesNo);
-                    if (result == DialogResult.Yes)
+                    if (IsToolBrokenorUnactiveinRentalView())
                     {
-                        // Assign rental details through text boxes in GUI
-                        MessageBox.Show("Reminder: Tool Condition and Tool Status cannot be edited when renting.");
-                        Rental rental = new Rental(Int32.Parse(txtCustomerID.Text), Int32.Parse(txtSelectToolID.Text),DateTime.Now);
-                        rental.Notes = txtNotes.Text;
-                        rental.DateRented = DateTime.Now;
-                        rental.DateReturned = null;
-                        rental.CustomerID = Int32.Parse(txtCustomerID.Text);
-                        rental.ToolID = Int32.Parse(txtSelectToolID.Text);
+                        DialogResult result = MessageBox.Show("Are you sure you want to rent this tool?", "Confirmation", MessageBoxButtons.YesNo);
+                        if (result == DialogResult.Yes)
+                        {
+                            // Assign rental details through text boxes in GUI
+                            MessageBox.Show("Reminder: Tool Condition and Tool Status cannot be edited when renting.");
+                            Rental rental = new Rental(Int32.Parse(txtCustomerID.Text), Int32.Parse(txtSelectToolID.Text), DateTime.Now);
+                            rental.Notes = txtNotes.Text;
+                            rental.DateRented = DateTime.Now;
+                            rental.DateReturned = null;
+                            rental.CustomerID = Int32.Parse(txtCustomerID.Text);
+                            rental.ToolID = Int32.Parse(txtSelectToolID.Text);
 
-                        // Updates rent status of tool
-                        tool = adapter.GetSingleToolDetails(Int32.Parse(txtSelectToolID.Text));
-                        tool.RentStatus = true;
+                            // Updates rent status of tool
+                            tool = adapter.GetSingleToolDetails(Int32.Parse(txtSelectToolID.Text));
+                            tool.RentStatus = true;
 
-                        // Saves Tool and Adds new rental
-                        adapter.SaveExistingTool(tool);
-                        adapter.AddNewRental(rental);
+                            // Saves Tool and Adds new rental
+                            adapter.SaveExistingTool(tool);
+                            adapter.AddNewRental(rental);
 
-                        // Resets Table
-                        SetupDataTable();
-                        
-                        MessageBox.Show("Tool Successfully Rented.");
-                        
+                            // Resets Table
+                            SetupDataTable();
+
+                            MessageBox.Show("Tool Successfully Rented.");
+                        }
                     }
                 
                 }
@@ -334,11 +353,11 @@ namespace YourCommunityWorkshop
 
                 using (StreamWriter write = new StreamWriter(filePath))
                 {
-                    string headings = "Rental ID, Customer ID, Tool ID, Date Rented, Date Returned, Notes";
+                    string headings = "Rental ID, Customer Name, Customer Surname, Tool Name, Tool Brand, Date Rented, Date Returned, Notes";
                     write.WriteLine(headings);  // Initially writes headings
                     foreach (var rental in rentalList)
                     {
-                        string line = $"{rental.RentalID},{rental.CustomerID},{rental.ToolID},{rental.DateRented},{rental.DateReturned},{rental.Notes}";  // Writes each line to document in this format
+                        string line = $"{rental.RentalID},{rental.Name},{rental.Surname},{rental.ToolName},{rental.ToolBrand},{rental.DateRented},{rental.DateReturned},{rental.Notes}";  // Writes each line to document in this format
                         write.WriteLine(line);
                     }
                 }
@@ -455,6 +474,18 @@ namespace YourCommunityWorkshop
             return true;
         }
 
+        // Removes ability to rent broken or unactive tools from the rental datagridview
+        private bool IsToolBrokenorUnactiveinRentalView()
+        {
+            if ((string)cbToolCondition.SelectedItem == "Broken" || (string)cbToolStatus.SelectedItem == "Retired")
+            {
+                MessageBox.Show("You've tried to change the Tool Condition or Tool Status whilst renting or " +
+                                "this tool has been broken or retired after the last time it was rented.");
+                return false;
+            }
+            return true;
+        }
+
         // Removes all unactive and broken tools to provide data integrity to rentals
         private void RemoveUnactiveAndBrokenTools()
         {
@@ -488,6 +519,17 @@ namespace YourCommunityWorkshop
             rbHired.Checked = false; // Button 3 reset radio buttons
             rbUnhired.Checked = false;
             rb_All.Checked = true;
+        }
+
+        // Checks if customer is selected for viewing rental history
+        private bool IsCustomerSelected()
+        {
+            if (String.IsNullOrWhiteSpace(txtCustomerID.Text))
+            {
+                MessageBox.Show("Please select a Customer to view rental history");
+                return false;
+            }
+            return true;
         }
 
         #endregion

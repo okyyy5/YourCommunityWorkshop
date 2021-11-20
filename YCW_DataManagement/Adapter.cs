@@ -131,15 +131,39 @@ namespace YCW_DataManagement
             }
         }
 
-        // SQL Query to retrieve all rentals
-        public List<Rental> GetAllRentals()
+        // SQL Query to retrieve all rentals for view mode
+        public List<RentalView> GetAllRentals()
         {
-            string sql = "SELECT * FROM Rentals";
+            string sql = "SELECT Rentals.RentalID, Customers.Name, Customers.Surname, Tools.Notes, " +
+                         "Tools.ToolName, Tools.ToolBrand, Rentals.DateRented, Rentals.DateReturned " +
+                         "FROM Rentals " +
+                         "INNER JOIN " +
+                         "Customers ON Rentals.CustomerID = Customers.CustomerID " +
+                         "INNER JOIN " +
+                         "Tools ON Rentals.ToolID = Tools.ToolID ";
             using (var connection = Helper.CreateDatabaseConnection())
             {
-                return connection.Query<Rental>(sql).ToList();
+                return connection.Query<RentalView>(sql).ToList();
             }
         }
+
+        // SQL Query to retrieve all rentals for a specific customer
+        public List<RentalView> GetAllRentals(int id)
+        {
+            string sql = "SELECT Rentals.RentalID, Customers.Name, Customers.Surname, Tools.Notes, " +
+                         "Tools.ToolName, Tools.ToolBrand, Rentals.DateRented, Rentals.DateReturned " +
+                         "FROM Rentals " +
+                         "INNER JOIN " +
+                         "Customers ON Rentals.CustomerID = Customers.CustomerID " +
+                         "INNER JOIN " +
+                         "Tools ON Rentals.ToolID = Tools.ToolID " +
+                         $"WHERE Rentals.CustomerID = {id}";
+            using (var connection = Helper.CreateDatabaseConnection())
+            {
+                return connection.Query<RentalView>(sql).ToList();
+            }
+        }
+
 
         // SQL Query to retrieve a single rental's details
         public Rental GetSingleRentalDetails(int id)
@@ -150,6 +174,8 @@ namespace YCW_DataManagement
                 return connection.QuerySingle<Rental>(sql);
             }
         }
+
+        
          //SQL Query to delete a single rental
         public void DeleteSingleRental(int id)
         {

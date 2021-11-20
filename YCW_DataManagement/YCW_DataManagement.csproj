@@ -71,6 +71,7 @@
     <Compile Include="Initializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rental.cs" />
+    <Compile Include="RentalView.cs" />
     <Compile Include="Tool.cs" />
   </ItemGroup>
   <ItemGroup>
